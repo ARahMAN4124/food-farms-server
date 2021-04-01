@@ -42,10 +42,13 @@ client.connect((err) => {
       });
   });
 
-  // app.delete("/delete/:id", (req, res) => {
-  //   const id = req.params.id;
-  //   console.log(id);
-  // });
+  app.delete("/delete/:id", (req, res) => {
+    const id = ObjectId(req.params.id);
+    console.log(id);
+    productCollection.findOneAndDelete({ _id: id }).then((result) => {
+      res.send(result.deletedCount > 0);
+    });
+  });
 
   app.post("/orders", (req, res) => {
     const newOrder = req.body;
